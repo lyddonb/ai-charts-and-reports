@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = 'chat-model';
+export const DEFAULT_CHAT_MODEL: string = 'chat-model-small';
 
 interface ChatModel {
   id: string;
@@ -8,9 +8,14 @@ interface ChatModel {
 
 export const chatModels: Array<ChatModel> = [
   {
-    id: 'chat-model',
-    name: 'Chat model',
-    description: 'Primary model for all-purpose chat',
+    id: 'chat-model-small',
+    name: 'Small model',
+    description: 'Small model for fast, lightweight tasks',
+  },
+  {
+    id: 'chat-model-large',
+    name: 'Large model',
+    description: 'Large model for complex, multi-step tasks',
   },
   {
     id: 'chat-model-reasoning',
