@@ -14,44 +14,6 @@ const LooseObject = z.object({}).passthrough();
  */
 export const ChartOptionsSchema = z.object({
   /**
-   * alignThresholds
-   * ----------------
-   * When using multiple axes, align the thresholds. When this is true, other ticks will also be aligned.
-   *
-   * Note that for line series and some other series types, the threshold option is set to null by default. This will in turn cause their y-axis to not have a threshold. In order to avoid that, set the series threshold to 0 or another number.
-   *
-   * If startOnTick or endOnTick in the axis options are set to false, or if the axis is logarithmic, the threshold will not be aligned.
-   *
-   * Defaults to false.
-   */
-  alignThresholds: z
-    .boolean()
-    .optional()
-    .describe(
-      'When using multiple axes, align the thresholds. When this is true, other ticks will also be aligned. Defaults to false. Note that for line series and some other series types, the threshold option is set to null by default. This will in turn cause their y-axis to not have a threshold. In order to avoid that, set the series threshold to 0 or another number. If startOnTick or endOnTick in the axis options are set to false, or if the axis is logarithmic, the threshold will not be aligned.',
-    ),
-
-  /**
-   * alignTicks
-   * -----------
-   * When using multiple axes, the ticks of two or more opposite axes will automatically be aligned by adding ticks to the axis or axes with the least ticks, as if tickAmount were specified.
-   *
-   * This can be prevented by setting alignTicks to false. If the grid lines look messy, it's a good idea to hide them for the secondary axis by setting gridLineWidth to 0.
-   *
-   * If startOnTick or endOnTick in the axis options are set to false, then the alignTicks will be disabled for the axis.
-   *
-   * Disabled for logarithmic axes.
-   *
-   * Defaults to true.
-   */
-  alignTicks: z
-    .boolean()
-    .optional()
-    .describe(
-      "When using multiple axes, the ticks of two or more opposite axes will automatically be aligned by adding ticks to the axis or axes with the least ticks, as if tickAmount were specified. This can be prevented by setting alignTicks to false. If the grid lines look messy, it's a good idea to hide them for the secondary axis by setting gridLineWidth to 0. If startOnTick or endOnTick in the axis options are set to false, then the alignTicks will be disabled for the axis. Disabled for logarithmic axes. Defaults to true.",
-    ),
-
-  /**
    * backgroundColor
    * ---------------
    * Sets the background color for the entire chart.
@@ -138,6 +100,7 @@ export const ChartOptionsSchema = z.object({
    * --------
    * Whether to invert the axes so that the x axis is vertical and y axis is horizontal. When true, the x axis is reversed by default.
    * If a bar series is present in the chart, it will be inverted automatically. Inverting the chart doesn't have an effect if there are no cartesian series in the chart.
+   *
    * Defaults to false.
    */
   inverted: z
