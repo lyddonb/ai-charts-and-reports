@@ -53,6 +53,18 @@ const loadHighchartsModules = async () => {
     await import('highcharts/es-modules/masters/modules/pareto.src.js');
     await import('highcharts/es-modules/masters/modules/pyramid3d.src.js');
     await import('highcharts/es-modules/masters/modules/solid-gauge.src.js');
+    await import('highcharts/es-modules/masters/modules/streamgraph.src.js');
+    await import('highcharts/es-modules/masters/modules/sunburst.src.js');
+    await import('highcharts/es-modules/masters/modules/timeline.src.js');
+    await import('highcharts/es-modules/masters/modules/treegraph.src.js');
+    await import('highcharts/es-modules/masters/modules/treemap.src.js');
+    await import('highcharts/es-modules/masters/modules/variable-pie.src.js');
+    await import('highcharts/es-modules/masters/modules/variwide.src.js');
+    await import('highcharts/es-modules/masters/modules/vector.src.js');
+    await import('highcharts/es-modules/masters/modules/venn.src.js');
+    await import('highcharts/es-modules/masters/modules/windbarb.src.js');
+    await import('highcharts/es-modules/masters/modules/wordcloud.src.js');
+    await import('highcharts/es-modules/masters/modules/xrange.src.js');
 
     return Highcharts.default;
   } catch (error) {
