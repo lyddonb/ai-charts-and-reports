@@ -44,6 +44,7 @@ const loadHighchartsModules = async () => {
       'highcharts/es-modules/masters/modules/parallel-coordinates.src.js'
     );
     await import('highcharts/es-modules/masters/modules/cylinder.src.js');
+    await import('highcharts/es-modules/masters/modules/pareto.src.js');
 
     return Highcharts.default;
   } catch (error) {

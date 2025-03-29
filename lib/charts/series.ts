@@ -23,7 +23,7 @@ const seriesTypes: string[] = [
   'item',
   'line',
   'lollipop',
-  'networkgraph',
+  // 'networkgraph', HOLDING OUT DUE TO HIGH COMPLEXITY
   'organization',
   'packedbubble',
   'pareto',
