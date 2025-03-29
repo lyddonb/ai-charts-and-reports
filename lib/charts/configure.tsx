@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import type { Options } from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,19 +15,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import seriesTypes from './series';
 
-// Dynamically import Highcharts with SSR disabled
-const HighchartsReact = dynamic(() => import('highcharts-react-official'), {
-  ssr: false,
-});
+// dynamically import highcharts with ssr disabled
+// const highchartsreact = dynamic(() => import('highcharts-react-official'), {
+//   ssr: false,
+// });
 
-let HighchartsInstance: any;
+const loadHighchartsModules = async () => {
+  try {
+    // First load the core Highcharts
+    const Highcharts = await import(
+      'highcharts/es-modules/masters/highcharts.src.js'
+    );
 
-if (typeof window !== 'undefined') {
-  HighchartsInstance = require('highcharts');
-}
+    // Then load highcharts-more
+    await import('highcharts/es-modules/masters/highcharts-more.src.js');
 
-type ChartType = 'bar' | 'line' | 'column' | 'pie';
+    // Then load other modules
+    await import(
+      'highcharts/es-modules/masters/modules/draggable-points.src.js'
+    );
+    await import(
+      'highcharts/es-modules/masters/modules/histogram-bellcurve.src.js'
+    );
+    await import('highcharts/es-modules/masters/modules/sankey.src.js');
+    await import('highcharts/es-modules/masters/modules/exporting.src.js');
+    await import('highcharts/es-modules/masters/modules/heatmap.src.js');
+    await import('highcharts/es-modules/masters/modules/accessibility.src.js');
+    await import('highcharts/es-modules/masters/modules/bullet.src.js');
+    await import('highcharts/es-modules/masters/modules/arc-diagram.src.js');
+
+    return Highcharts.default;
+  } catch (error) {
+    console.error('Error loading Highcharts modules:', error);
+    throw error;
+  }
+};
+
+type ChartType = (typeof seriesTypes)[number];
 
 const defaultOptions: Options = {
   title: {
@@ -41,7 +68,7 @@ const defaultOptions: Options = {
       name: 'Sample Chart',
       data: [5, 10, 95],
     },
-  ] as Highcharts.SeriesOptionsType[],
+  ],
   xAxis: {
     categories: ['0', '1', '2'],
   },
@@ -52,23 +79,45 @@ const defaultOptions: Options = {
   },
 };
 
-const Configure = () => {
+const Chart = ({ options }: { options: Options }) => {
   const [mounted, setMounted] = useState(false);
-  const [chartOptions, setChartOptions] = useState<Options>(defaultOptions);
+  const [highchartsInstance, setHighchartsInstance] = useState<any>(null);
 
   useEffect(() => {
-    setMounted(true);
+    if (typeof window === 'undefined') return;
+
+    const init = async () => {
+      try {
+        const Highcharts = await loadHighchartsModules();
+        setHighchartsInstance(Highcharts);
+        setMounted(true);
+      } catch (error) {
+        console.error('Error initializing Highcharts:', error);
+      }
+    };
+
+    init();
   }, []);
 
+  if (!mounted || !highchartsInstance) {
+    return <div>Loading chart...</div>;
+  }
+
+  return <HighchartsReact highcharts={highchartsInstance} options={options} />;
+};
+
+const Configure = () => {
+  const [chartOptions, setChartOptions] = useState<Options>(defaultOptions);
+
   const handleTitleChange = (value: string) => {
-    setChartOptions((prev) => ({
+    setChartOptions((prev: Options) => ({
       ...prev,
       title: { text: value },
     }));
   };
 
   const handleChartTypeChange = (value: ChartType) => {
-    setChartOptions((prev) => ({
+    setChartOptions((prev: Options) => ({
       ...prev,
       series: [
         {
@@ -80,7 +129,7 @@ const Configure = () => {
   };
 
   const handleSampleData = () => {
-    setChartOptions((prev) => ({
+    setChartOptions((prev: Options) => ({
       ...prev,
       series: [
         {
@@ -132,10 +181,11 @@ const Configure = () => {
                   <SelectValue placeholder="Select chart type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bar">Bar</SelectItem>
-                  <SelectItem value="line">Line</SelectItem>
-                  <SelectItem value="column">Column</SelectItem>
-                  <SelectItem value="pie">Pie</SelectItem>
+                  {seriesTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -169,14 +219,9 @@ const Configure = () => {
         </Card>
 
         <Card className="p-4 flex-1 min-w-0">
-          {mounted && (
-            <div className="w-full h-full">
-              <HighchartsReact
-                highcharts={HighchartsInstance}
-                options={chartOptions}
-              />
-            </div>
-          )}
+          <div className="w-full h-full">
+            <Chart options={chartOptions} />
+          </div>
         </Card>
       </div>
     </div>
