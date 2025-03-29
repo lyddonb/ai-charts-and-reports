@@ -33,8 +33,7 @@ const seriesTypes: string[] = [
   'pyramid3d',
   'sankey',
   'scatter',
-  'scatter3d',
-  'series',
+  // 'scatter3d', HOLDING OUT DUE TO HIGH COMPLEXITY
   'solidgauge',
   'spline',
   'streamgraph',

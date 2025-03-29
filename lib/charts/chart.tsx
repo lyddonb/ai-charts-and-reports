@@ -15,6 +15,12 @@ const loadHighchartsModules = async () => {
     // Then load highcharts-more
     await import('highcharts/es-modules/masters/highcharts-more.src.js');
 
+    // Load series modules
+    await import('highcharts/es-modules/masters/modules/series-label.src.js');
+    await import(
+      'highcharts/es-modules/masters/modules/series-on-point.src.js'
+    );
+
     // Load 3D module before any 3D-dependent modules
     await import('highcharts/es-modules/masters/highcharts-3d.src.js');
 
@@ -46,6 +52,7 @@ const loadHighchartsModules = async () => {
     await import('highcharts/es-modules/masters/modules/cylinder.src.js');
     await import('highcharts/es-modules/masters/modules/pareto.src.js');
     await import('highcharts/es-modules/masters/modules/pyramid3d.src.js');
+    await import('highcharts/es-modules/masters/modules/solid-gauge.src.js');
 
     return Highcharts.default;
   } catch (error) {
@@ -79,6 +86,8 @@ const Chart = ({ options }: { options: Options }) => {
   if (!mounted || !highchartsInstance) {
     return <div>Loading chart...</div>;
   }
+
+  console.log(options);
 
   return <HighchartsReact highcharts={highchartsInstance} options={options} />;
 };
