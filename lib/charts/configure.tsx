@@ -32,6 +32,9 @@ const loadHighchartsModules = async () => {
     // Then load highcharts-more
     await import('highcharts/es-modules/masters/highcharts-more.src.js');
 
+    // Load 3D module before any 3D-dependent modules
+    await import('highcharts/es-modules/masters/highcharts-3d.src.js');
+
     // Then load other modules
     await import(
       'highcharts/es-modules/masters/modules/draggable-points.src.js'
@@ -45,6 +48,19 @@ const loadHighchartsModules = async () => {
     await import('highcharts/es-modules/masters/modules/accessibility.src.js');
     await import('highcharts/es-modules/masters/modules/bullet.src.js');
     await import('highcharts/es-modules/masters/modules/arc-diagram.src.js');
+    await import(
+      'highcharts/es-modules/masters/modules/dependency-wheel.src.js'
+    );
+    await import('highcharts/es-modules/masters/modules/dumbbell.src.js');
+    await import('highcharts/es-modules/masters/modules/funnel3d.src.js');
+    await import('highcharts/es-modules/masters/modules/funnel.src.js');
+    await import('highcharts/es-modules/masters/modules/lollipop.src.js');
+    await import('highcharts/es-modules/masters/modules/networkgraph.src.js');
+    await import('highcharts/es-modules/masters/modules/organization.src.js');
+    await import(
+      'highcharts/es-modules/masters/modules/parallel-coordinates.src.js'
+    );
+    await import('highcharts/es-modules/masters/modules/cylinder.src.js');
 
     return Highcharts.default;
   } catch (error) {
@@ -78,6 +94,76 @@ const defaultOptions: Options = {
     },
   },
 };
+
+const getGaugeOptions = (): Options => ({
+  chart: {
+    type: 'gauge',
+  },
+  title: {
+    text: 'Gauge Chart',
+  },
+  pane: {
+    startAngle: -150,
+    endAngle: 150,
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    lineWidth: 2,
+    minorTickInterval: 'auto',
+    minorTickWidth: 1,
+    minorTickLength: 10,
+    minorTickPosition: 'inside',
+    minorTickColor: '#666',
+    tickPixelInterval: 30,
+    tickWidth: 2,
+    tickPosition: 'inside',
+    tickLength: 10,
+    tickColor: '#666',
+    labels: {
+      step: 2,
+      rotation: 0,
+    },
+    plotBands: [
+      {
+        from: 0,
+        to: 60,
+        color: '#DF5353',
+      },
+      {
+        from: 60,
+        to: 80,
+        color: '#DDDF0D',
+      },
+      {
+        from: 80,
+        to: 100,
+        color: '#55BF3B',
+      },
+    ],
+  },
+  series: [
+    {
+      type: 'gauge',
+      name: 'Speed',
+      data: [80],
+      tooltip: {
+        valueSuffix: ' km/h',
+      },
+      dataLabels: {
+        format: '{y} km/h',
+        borderWidth: 0,
+        color: '#333',
+        style: {
+          textOutline: 'none',
+        },
+        y: 26,
+        align: 'center',
+        verticalAlign: 'middle',
+      },
+    },
+  ],
+});
 
 const Chart = ({ options }: { options: Options }) => {
   const [mounted, setMounted] = useState(false);
@@ -117,11 +203,14 @@ const Configure = () => {
   };
 
   const handleChartTypeChange = (value: ChartType) => {
+    // Use gauge options if the chart type is gauge
+    const chartOptions = value === 'gauge' ? getGaugeOptions() : defaultOptions;
+
     setChartOptions((prev: Options) => ({
-      ...prev,
+      ...chartOptions,
       series: [
         {
-          ...(prev.series?.[0] as Highcharts.SeriesOptionsType),
+          ...(chartOptions.series?.[0] as Highcharts.SeriesOptionsType),
           type: value,
         },
       ] as Highcharts.SeriesOptionsType[],
