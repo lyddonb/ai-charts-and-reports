@@ -45,6 +45,7 @@ const loadHighchartsModules = async () => {
     );
     await import('highcharts/es-modules/masters/modules/cylinder.src.js');
     await import('highcharts/es-modules/masters/modules/pareto.src.js');
+    await import('highcharts/es-modules/masters/modules/pyramid3d.src.js');
 
     return Highcharts.default;
   } catch (error) {
