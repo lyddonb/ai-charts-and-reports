@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import dynamic from 'next/dynamic';
 import type { Options } from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,58 +15,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import seriesTypes from './series';
+import Chart from './chart';
 
 // dynamically import highcharts with ssr disabled
 // const highchartsreact = dynamic(() => import('highcharts-react-official'), {
 //   ssr: false,
 // });
-
-const loadHighchartsModules = async () => {
-  try {
-    // First load the core Highcharts
-    const Highcharts = await import(
-      'highcharts/es-modules/masters/highcharts.src.js'
-    );
-
-    // Then load highcharts-more
-    await import('highcharts/es-modules/masters/highcharts-more.src.js');
-
-    // Load 3D module before any 3D-dependent modules
-    await import('highcharts/es-modules/masters/highcharts-3d.src.js');
-
-    // Then load other modules
-    await import(
-      'highcharts/es-modules/masters/modules/draggable-points.src.js'
-    );
-    await import(
-      'highcharts/es-modules/masters/modules/histogram-bellcurve.src.js'
-    );
-    await import('highcharts/es-modules/masters/modules/sankey.src.js');
-    await import('highcharts/es-modules/masters/modules/exporting.src.js');
-    await import('highcharts/es-modules/masters/modules/heatmap.src.js');
-    await import('highcharts/es-modules/masters/modules/accessibility.src.js');
-    await import('highcharts/es-modules/masters/modules/bullet.src.js');
-    await import('highcharts/es-modules/masters/modules/arc-diagram.src.js');
-    await import(
-      'highcharts/es-modules/masters/modules/dependency-wheel.src.js'
-    );
-    await import('highcharts/es-modules/masters/modules/dumbbell.src.js');
-    await import('highcharts/es-modules/masters/modules/funnel3d.src.js');
-    await import('highcharts/es-modules/masters/modules/funnel.src.js');
-    await import('highcharts/es-modules/masters/modules/lollipop.src.js');
-    await import('highcharts/es-modules/masters/modules/networkgraph.src.js');
-    await import('highcharts/es-modules/masters/modules/organization.src.js');
-    await import(
-      'highcharts/es-modules/masters/modules/parallel-coordinates.src.js'
-    );
-    await import('highcharts/es-modules/masters/modules/cylinder.src.js');
-
-    return Highcharts.default;
-  } catch (error) {
-    console.error('Error loading Highcharts modules:', error);
-    throw error;
-  }
-};
 
 type ChartType = (typeof seriesTypes)[number];
 
@@ -165,33 +118,6 @@ const getGaugeOptions = (): Options => ({
   ],
 });
 
-const Chart = ({ options }: { options: Options }) => {
-  const [mounted, setMounted] = useState(false);
-  const [highchartsInstance, setHighchartsInstance] = useState<any>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const init = async () => {
-      try {
-        const Highcharts = await loadHighchartsModules();
-        setHighchartsInstance(Highcharts);
-        setMounted(true);
-      } catch (error) {
-        console.error('Error initializing Highcharts:', error);
-      }
-    };
-
-    init();
-  }, []);
-
-  if (!mounted || !highchartsInstance) {
-    return <div>Loading chart...</div>;
-  }
-
-  return <HighchartsReact highcharts={highchartsInstance} options={options} />;
-};
-
 const Configure = () => {
   const [chartOptions, setChartOptions] = useState<Options>(defaultOptions);
 
@@ -203,18 +129,107 @@ const Configure = () => {
   };
 
   const handleChartTypeChange = (value: ChartType) => {
-    // Use gauge options if the chart type is gauge
-    const chartOptions = value === 'gauge' ? getGaugeOptions() : defaultOptions;
+    // Use specific options based on chart type
+    const chartOptions = (() => {
+      switch (value) {
+        case 'gauge':
+          return getGaugeOptions();
+        case 'cylinder': {
+          return {
+            chart: {
+              type: value,
+              height: '400px',
+            },
+            title: {
+              text: 'Cylinder Chart',
+            },
+            xAxis: {
+              categories: ['A', 'B', 'C'],
+            },
+            yAxis: {
+              title: {
+                text: 'Values',
+              },
+            },
+            plotOptions: {
+              cylinder: {
+                dataLabels: {
+                  enabled: true,
+                  format: '{point.y}',
+                },
+              },
+            },
+            series: [
+              {
+                type: value,
+                name: 'Cylinder',
+                data: [5, 10, 95],
+              } as Highcharts.SeriesCylinderOptions,
+            ],
+          };
+        }
+        default: {
+          // Create a completely clean configuration
+          return {
+            chart: {
+              type: value,
+              resetZoomButton: {
+                theme: {
+                  display: 'none',
+                },
+              },
+            },
+            title: {
+              text: 'Sample Chart',
+            },
+            xAxis: {
+              categories: ['0', '1', '2'],
+              gridLineWidth: 0,
+              minorGridLineWidth: 0,
+            },
+            yAxis: {
+              title: {
+                text: 'Values',
+              },
+              min: null,
+              max: null,
+              gridLineWidth: 0,
+              minorGridLineWidth: 0,
+              plotBands: undefined,
+              plotLines: undefined,
+              minorTickLength: 0,
+              tickLength: 0,
+            },
+            plotOptions: {
+              series: {
+                color: '#7cb5ec',
+                animation: true,
+              },
+            },
+            pane: undefined,
+            series: [
+              {
+                type: value,
+                name: 'Sample Chart',
+                data: [5, 10, 95],
+              },
+            ],
+            tooltip: {
+              enabled: true,
+              shared: true,
+            },
+            legend: {
+              enabled: true,
+            },
+            credits: {
+              enabled: false,
+            },
+          };
+        }
+      }
+    })();
 
-    setChartOptions((prev: Options) => ({
-      ...chartOptions,
-      series: [
-        {
-          ...(chartOptions.series?.[0] as Highcharts.SeriesOptionsType),
-          type: value,
-        },
-      ] as Highcharts.SeriesOptionsType[],
-    }));
+    setChartOptions(chartOptions as Options);
   };
 
   const handleSampleData = () => {
