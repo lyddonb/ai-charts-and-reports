@@ -20,6 +20,7 @@ import AreaStackedChartExample from './area-stacked';
 import AreaRangeLineChartExample from './arearange-line';
 import AreaRangeChartExample from './arearange';
 import AreaSplineChartExample from './areaspline';
+import BarChartExample from './bar-chart';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -44,6 +45,7 @@ export const examples = [
   AreaRangeLineChartExample,
   AreaRangeChartExample,
   AreaSplineChartExample,
+  BarChartExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
