@@ -27,6 +27,40 @@ import {
   getAreaOptions,
   getBarOptions,
   getLineOptions,
+  getArcDiagramOptions,
+  getBellCurveOptions,
+  getBubbleOptions,
+  getBulletOptions,
+  getColumnPyramidOptions,
+  getColumnRangeOptions,
+  getDependencyWheelOptions,
+  getDumbbellOptions,
+  getFunnel3DOptions,
+  getHeatmapOptions,
+  getHistogramOptions,
+  getItemOptions,
+  getLollipopOptions,
+  getMapOptions,
+  getMapBubbleOptions,
+  getMapLineOptions,
+  getMapPointOptions,
+  getNetworkGraphOptions,
+  getOrganizationOptions,
+  getPackedBubbleOptions,
+  getParallelCoordinatesOptions,
+  getPolygonOptions,
+  getPyramidOptions,
+  getSankeyOptions,
+  getScatterOptions,
+  getSolidGaugeOptions,
+  getSplineOptions,
+  getStreamGraphOptions,
+  getSunburstOptions,
+  getTimelineOptions,
+  getTreemapOptions,
+  getVariablePieOptions,
+  getVennOptions,
+  getWordCloudOptions,
 } from './options';
 
 // dynamically import highcharts with ssr disabled
@@ -60,6 +94,59 @@ const defaultOptions: Options = {
   },
 };
 
+const chartOptionsMap: Record<ChartType, () => Options> = {
+  gauge: getGaugeOptions,
+  cylinder: getCylinderOptions,
+  pareto: getParetoOptions,
+  pyramid3d: getPyramid3DOptions,
+  scatter3d: getScatter3DOptions,
+  pie: getPieOptions,
+  area: getAreaOptions,
+  bar: getBarOptions,
+  line: getLineOptions,
+  arcdiagram: getArcDiagramOptions,
+  bellcurve: getBellCurveOptions,
+  bubble: getBubbleOptions,
+  bullet: getBulletOptions,
+  column: () => getDefaultOptions('column'),
+  columnpyramid: getColumnPyramidOptions,
+  columnrange: getColumnRangeOptions,
+  dependencywheel: getDependencyWheelOptions,
+  dumbbell: getDumbbellOptions,
+  funnel: () => getDefaultOptions('funnel'),
+  funnel3d: getFunnel3DOptions,
+  heatmap: getHeatmapOptions,
+  histogram: getHistogramOptions,
+  item: getItemOptions,
+  lollipop: getLollipopOptions,
+  map: getMapOptions,
+  mapbubble: getMapBubbleOptions,
+  mapline: getMapLineOptions,
+  mappoint: getMapPointOptions,
+  networkgraph: getNetworkGraphOptions,
+  organization: getOrganizationOptions,
+  packedbubble: getPackedBubbleOptions,
+  parallelcoordinates: getParallelCoordinatesOptions,
+  polygon: getPolygonOptions,
+  pyramid: getPyramidOptions,
+  sankey: getSankeyOptions,
+  scatter: getScatterOptions,
+  solidgauge: getSolidGaugeOptions,
+  spline: getSplineOptions,
+  streamgraph: getStreamGraphOptions,
+  sunburst: getSunburstOptions,
+  timeline: getTimelineOptions,
+  treegraph: () => getDefaultOptions('treegraph'),
+  treemap: getTreemapOptions,
+  variablepie: getVariablePieOptions,
+  variwide: () => getDefaultOptions('variwide'),
+  vector: () => getDefaultOptions('vector'),
+  venn: getVennOptions,
+  windbarb: () => getDefaultOptions('windbarb'),
+  wordcloud: getWordCloudOptions,
+  xrange: () => getDefaultOptions('xrange'),
+};
+
 const Configure = () => {
   const [chartOptions, setChartOptions] = useState<Options>(defaultOptions);
 
@@ -71,32 +158,7 @@ const Configure = () => {
   };
 
   const handleChartTypeChange = (value: ChartType) => {
-    // Use specific options based on chart type
-    const chartOptions = (() => {
-      switch (value) {
-        case 'gauge':
-          return getGaugeOptions();
-        case 'cylinder':
-          return getCylinderOptions();
-        case 'pareto':
-          return getParetoOptions();
-        case 'pyramid3d':
-          return getPyramid3DOptions();
-        case 'scatter3d':
-          return getScatter3DOptions();
-        case 'pie':
-          return getPieOptions();
-        case 'area':
-          return getAreaOptions();
-        case 'bar':
-          return getBarOptions();
-        case 'line':
-          return getLineOptions();
-        default:
-          return getDefaultOptions(value);
-      }
-    })();
-
+    const chartOptions = chartOptionsMap[value]();
     setChartOptions(chartOptions as Options);
   };
 
