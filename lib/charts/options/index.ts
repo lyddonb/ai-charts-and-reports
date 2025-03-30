@@ -44,6 +44,10 @@ import { getVennOptions } from './venn';
 import { getWordCloudOptions } from './wordcloud';
 import { getAreaRangeOptions } from './arearange';
 import { getAreaSplineOptions } from './areaspline';
+import { getVariwideOptions } from './variwide';
+import { getVectorOptions } from './vector';
+import { getWindbarbOptions } from './windbarb';
+import { getXRangeOptions } from './xrange';
 
 export {
   getGaugeOptions,
@@ -92,4 +96,8 @@ export {
   getWordCloudOptions,
   getAreaRangeOptions,
   getAreaSplineOptions,
+  getVariwideOptions,
+  getVectorOptions,
+  getWindbarbOptions,
+  getXRangeOptions,
 };

@@ -62,6 +62,10 @@ import {
   getWordCloudOptions,
   getAreaRangeOptions,
   getAreaSplineOptions,
+  getVariwideOptions,
+  getVectorOptions,
+  getWindbarbOptions,
+  getXRangeOptions,
 } from './options';
 
 // dynamically import highcharts with ssr disabled
@@ -144,12 +148,12 @@ const chartOptionsMap: Record<ChartType, () => Options> = {
   treegraph: () => getDefaultOptions('treegraph'),
   treemap: getTreemapOptions,
   variablepie: getVariablePieOptions,
-  variwide: () => getDefaultOptions('variwide'),
-  vector: () => getDefaultOptions('vector'),
+  variwide: getVariwideOptions,
+  vector: getVectorOptions,
   venn: getVennOptions,
-  windbarb: () => getDefaultOptions('windbarb'),
+  windbarb: getWindbarbOptions,
   wordcloud: getWordCloudOptions,
-  xrange: () => getDefaultOptions('xrange'),
+  xrange: getXRangeOptions,
 };
 
 const Configure = () => {
