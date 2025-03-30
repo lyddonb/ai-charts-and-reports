@@ -61,6 +61,8 @@ import {
   getVariablePieOptions,
   getVennOptions,
   getWordCloudOptions,
+  getAreaRangeOptions,
+  getAreaSplineOptions,
 } from './options';
 
 // dynamically import highcharts with ssr disabled
@@ -102,6 +104,8 @@ const chartOptionsMap: Record<ChartType, () => Options> = {
   scatter3d: getScatter3DOptions,
   pie: getPieOptions,
   area: getAreaOptions,
+  arearange: getAreaRangeOptions,
+  areaspline: getAreaSplineOptions,
   bar: getBarOptions,
   line: getLineOptions,
   arcdiagram: getArcDiagramOptions,

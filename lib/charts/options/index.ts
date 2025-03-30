@@ -42,6 +42,8 @@ import { getTreemapOptions } from './treemap';
 import { getVariablePieOptions } from './variablepie';
 import { getVennOptions } from './venn';
 import { getWordCloudOptions } from './wordcloud';
+import { getAreaRangeOptions } from './arearange';
+import { getAreaSplineOptions } from './areaspline';
 
 export {
   getGaugeOptions,
@@ -88,4 +90,6 @@ export {
   getVariablePieOptions,
   getVennOptions,
   getWordCloudOptions,
+  getAreaRangeOptions,
+  getAreaSplineOptions,
 };
