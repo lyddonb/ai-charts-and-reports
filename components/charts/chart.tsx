@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import type { Options } from 'highcharts';
 
@@ -76,6 +76,12 @@ const loadHighchartsModules = async () => {
 const Chart = ({ options }: { options: Options }) => {
   const [mounted, setMounted] = useState(false);
   const [highchartsInstance, setHighchartsInstance] = useState<any>(null);
+  const [chartOptions, setChartOptions] = useState(options);
+
+  // Update chartOptions when options prop changes
+  useEffect(() => {
+    setChartOptions(options);
+  }, [options]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -122,6 +128,103 @@ const Chart = ({ options }: { options: Options }) => {
     init();
   }, [options.chart?.type]);
 
+  // Add event listeners after chart is mounted
+  useEffect(() => {
+    if (!mounted || !highchartsInstance || options.chart?.type !== 'scatter3d')
+      return;
+
+    const chart = document.querySelector('.highcharts-container');
+    if (!chart) {
+      console.log('Chart container not found');
+      return;
+    }
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let startAlpha = 0;
+    let startBeta = 0;
+
+    const handleDragStart = (e: Event) => {
+      e.preventDefault();
+      isDragging = true;
+      const rect = chart.getBoundingClientRect();
+      startX =
+        'touches' in e
+          ? (e as TouchEvent).touches[0].clientX - rect.left
+          : (e as MouseEvent).clientX - rect.left;
+      startY =
+        'touches' in e
+          ? (e as TouchEvent).touches[0].clientY - rect.top
+          : (e as MouseEvent).clientY - rect.top;
+      startAlpha = chartOptions.chart?.options3d?.alpha || 0;
+      startBeta = chartOptions.chart?.options3d?.beta || 0;
+    };
+
+    const handleDrag = (e: Event) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const rect = chart.getBoundingClientRect();
+      const currentX =
+        'touches' in e
+          ? (e as TouchEvent).touches[0].clientX - rect.left
+          : (e as MouseEvent).clientX - rect.left;
+      const currentY =
+        'touches' in e
+          ? (e as TouchEvent).touches[0].clientY - rect.top
+          : (e as MouseEvent).clientY - rect.top;
+      const sensitivity = 5;
+
+      const newAlpha = startAlpha + (currentY - startY) / sensitivity;
+      const newBeta = startBeta + (startX - currentX) / sensitivity;
+
+      setChartOptions((prevOptions) => ({
+        ...prevOptions,
+        chart: {
+          ...prevOptions.chart,
+          options3d: {
+            ...prevOptions.chart?.options3d,
+            alpha: newAlpha,
+            beta: newBeta,
+          },
+        },
+      }));
+    };
+
+    const handleDragEnd = () => {
+      isDragging = false;
+    };
+
+    // Prevent default touch behavior
+    const preventDefault = (e: Event) => e.preventDefault();
+    chart.addEventListener('touchstart', preventDefault, { passive: false });
+    chart.addEventListener('touchmove', preventDefault, { passive: false });
+
+    // Add event listeners
+    document.addEventListener('mousedown', handleDragStart);
+    document.addEventListener('touchstart', handleDragStart);
+    document.addEventListener('mousemove', handleDrag);
+    document.addEventListener('touchmove', handleDrag);
+    document.addEventListener('mouseup', handleDragEnd);
+    document.addEventListener('touchend', handleDragEnd);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener('mousedown', handleDragStart);
+      document.removeEventListener('touchstart', handleDragStart);
+      document.removeEventListener('mousemove', handleDrag);
+      document.removeEventListener('touchmove', handleDrag);
+      document.removeEventListener('mouseup', handleDragEnd);
+      document.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [
+    mounted,
+    highchartsInstance,
+    options.chart?.type,
+    chartOptions.chart?.options3d?.alpha,
+    chartOptions.chart?.options3d?.beta,
+  ]);
+
   if (!mounted || !highchartsInstance) {
     return <div>Loading chart...</div>;
   }
@@ -130,7 +233,7 @@ const Chart = ({ options }: { options: Options }) => {
     <HighchartsReact
       key={`${options.chart?.type}-${Date.now()}`}
       highcharts={highchartsInstance}
-      options={options}
+      options={chartOptions}
     />
   );
 };
