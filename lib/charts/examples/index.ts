@@ -17,6 +17,7 @@ import AreaNegativeChartExample from './area-negative';
 import AreaStackedInvertedChartExample from './area-stacked-inverted';
 import AreaStackedPercentChartExample from './area-stacked-percent';
 import AreaStackedChartExample from './area-stacked';
+import AreaRangeLineChartExample from './arearange-line';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -38,6 +39,7 @@ export const examples = [
   AreaStackedInvertedChartExample,
   AreaStackedPercentChartExample,
   AreaStackedChartExample,
+  AreaRangeLineChartExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
