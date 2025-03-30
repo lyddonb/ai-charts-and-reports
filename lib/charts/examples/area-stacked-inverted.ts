@@ -1,4 +1,4 @@
-import type { Options } from 'highcharts';
+import type { Options, SeriesAreasplineOptions } from 'highcharts';
 import type { Example } from './example';
 
 const colors = [
@@ -11,7 +11,11 @@ const colors = [
   '#ECFEE8',
 ];
 
-const areaStackedInvertedChartOptions: Options = {
+interface AreaChartOptions extends Omit<Options, 'series'> {
+  series: SeriesAreasplineOptions[];
+}
+
+const areaStackedInvertedChartOptions: AreaChartOptions = {
   chart: {
     type: 'areaspline',
     inverted: true,
@@ -29,6 +33,7 @@ const areaStackedInvertedChartOptions: Options = {
     },
   },
   subtitle: {
+    useHTML: true,
     text: `Source:
         <a href="https://en.wikipedia.org/wiki/Atmosphere_of_Earth"
             target="_blank">Wikipedia.org</a>`,
@@ -128,7 +133,7 @@ const areaStackedInvertedChartOptions: Options = {
       name: 'H',
       data: [0, 0, 0, 0.5, 2.5, 6, 10, 15, 21, 29, 38],
     },
-  ],
+  ] as SeriesAreasplineOptions[],
 };
 
 const AreaStackedInvertedChartExample: Example = {
