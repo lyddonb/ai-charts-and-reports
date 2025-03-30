@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import dynamic from 'next/dynamic';
 import type { Options } from 'highcharts';
 import { Card } from '@/components/ui/card';
@@ -167,26 +167,44 @@ const Configure = () => {
   };
 
   const handleChartTypeChange = (value: ChartType) => {
+    const baseOptions: Options = {
+      chart: undefined,
+      title: undefined,
+      subtitle: undefined,
+      series: undefined,
+      tooltip: {
+        enabled: false,
+      },
+      plotOptions: undefined,
+      credits: undefined,
+      yAxis: {
+        visible: false,
+        crosshair: false,
+        labels: { enabled: false },
+        title: { text: '' },
+        lineWidth: 0,
+        tickWidth: 0,
+      },
+      xAxis: {
+        visible: false,
+        crosshair: false,
+        labels: { enabled: false },
+        title: { text: '' },
+        lineWidth: 0,
+        tickWidth: 0,
+      },
+    };
     // Get the new options
-    setChartOptions({});
     const newOptions = chartOptionsMap[value]();
 
     // Create a clean options object with only the necessary properties
     const cleanOptions: Options = {
+      ...baseOptions,
+      ...newOptions,
       chart: {
         type: value,
         height: '400px',
         backgroundColor: 'white',
-      },
-      title: newOptions.title,
-      subtitle: newOptions.subtitle,
-      xAxis: newOptions.xAxis,
-      yAxis: newOptions.yAxis,
-      series: newOptions.series,
-      tooltip: newOptions.tooltip,
-      plotOptions: newOptions.plotOptions,
-      credits: {
-        enabled: false,
       },
     };
 

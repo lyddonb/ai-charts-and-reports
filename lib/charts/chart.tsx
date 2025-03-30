@@ -104,7 +104,7 @@ const Chart = ({ options }: { options: Options }) => {
 
   return (
     <HighchartsReact
-      key={options.chart?.type}
+      key={`${options.chart?.type}-${Date.now()}`}
       highcharts={highchartsInstance}
       options={options}
     />

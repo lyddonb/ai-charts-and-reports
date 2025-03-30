@@ -37,10 +37,7 @@ export const getVectorOptions = (): Options => ({
       rotationOrigin: 'center',
       vectorLength: 10,
       lineWidth: 2,
-      marker: {
-        enabled: true,
-        radius: 3,
-      },
+      marker: 'circle',
     },
   },
   series: [
