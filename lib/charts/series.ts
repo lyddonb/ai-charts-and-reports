@@ -20,7 +20,6 @@ const seriesTypes: string[] = [
   'gauge',
   'heatmap',
   'histogram',
-  'item',
   'line',
   'lollipop',
   // 'networkgraph', HOLDING OUT DUE TO HIGH COMPLEXITY

@@ -37,6 +37,7 @@ const loadHighchartsModules = async () => {
     await import('highcharts/es-modules/masters/modules/accessibility.src.js');
     await import('highcharts/es-modules/masters/modules/bullet.src.js');
     await import('highcharts/es-modules/masters/modules/arc-diagram.src.js');
+    await import('highcharts/es-modules/masters/modules/item-series.src.js');
     await import(
       'highcharts/es-modules/masters/modules/dependency-wheel.src.js'
     );
