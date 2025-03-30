@@ -9,6 +9,7 @@ import AccessibleLineExample from './accessible-line';
 import AccessiblePieExample from './accessible-pie';
 import AdvancedAccessibleExample from './advanced-accessible';
 import AnnotationsExample from './annotations';
+import ArcDiagramExample from './arc-diagram';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -22,6 +23,7 @@ export const examples = [
   AccessiblePieExample,
   AdvancedAccessibleExample,
   AnnotationsExample,
+  ArcDiagramExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
