@@ -16,6 +16,18 @@ import {
 } from '@/components/ui/select';
 import seriesTypes from './series';
 import Chart from './chart';
+import {
+  getGaugeOptions,
+  getCylinderOptions,
+  getParetoOptions,
+  getPyramid3DOptions,
+  getScatter3DOptions,
+  getDefaultOptions,
+  getPieOptions,
+  getAreaOptions,
+  getBarOptions,
+  getLineOptions,
+} from './options';
 
 // dynamically import highcharts with ssr disabled
 // const highchartsreact = dynamic(() => import('highcharts-react-official'), {
@@ -48,76 +60,6 @@ const defaultOptions: Options = {
   },
 };
 
-const getGaugeOptions = (): Options => ({
-  chart: {
-    type: 'gauge',
-  },
-  title: {
-    text: 'Gauge Chart',
-  },
-  pane: {
-    startAngle: -150,
-    endAngle: 150,
-  },
-  yAxis: {
-    min: 0,
-    max: 100,
-    lineWidth: 2,
-    minorTickInterval: 'auto',
-    minorTickWidth: 1,
-    minorTickLength: 10,
-    minorTickPosition: 'inside',
-    minorTickColor: '#666',
-    tickPixelInterval: 30,
-    tickWidth: 2,
-    tickPosition: 'inside',
-    tickLength: 10,
-    tickColor: '#666',
-    labels: {
-      step: 2,
-      rotation: 0,
-    },
-    plotBands: [
-      {
-        from: 0,
-        to: 60,
-        color: '#DF5353',
-      },
-      {
-        from: 60,
-        to: 80,
-        color: '#DDDF0D',
-      },
-      {
-        from: 80,
-        to: 100,
-        color: '#55BF3B',
-      },
-    ],
-  },
-  series: [
-    {
-      type: 'gauge',
-      name: 'Speed',
-      data: [80],
-      tooltip: {
-        valueSuffix: ' km/h',
-      },
-      dataLabels: {
-        format: '{y} km/h',
-        borderWidth: 0,
-        color: '#333',
-        style: {
-          textOutline: 'none',
-        },
-        y: 26,
-        align: 'center',
-        verticalAlign: 'middle',
-      },
-    },
-  ],
-});
-
 const Configure = () => {
   const [chartOptions, setChartOptions] = useState<Options>(defaultOptions);
 
@@ -134,304 +76,24 @@ const Configure = () => {
       switch (value) {
         case 'gauge':
           return getGaugeOptions();
-        case 'cylinder': {
-          return {
-            chart: {
-              type: value,
-              height: '400px',
-            },
-            title: {
-              text: 'Cylinder Chart',
-            },
-            xAxis: {
-              categories: ['A', 'B', 'C'],
-            },
-            yAxis: {
-              title: {
-                text: 'Values',
-              },
-            },
-            plotOptions: {
-              cylinder: {
-                dataLabels: {
-                  enabled: true,
-                  format: '{point.y}',
-                },
-              },
-            },
-            series: [
-              {
-                type: value,
-                name: 'Cylinder',
-                data: [5, 10, 95],
-              } as Highcharts.SeriesCylinderOptions,
-            ],
-          };
-        }
-        case 'pareto': {
-          return {
-            chart: {
-              type: 'column',
-              height: '400px',
-            },
-            title: {
-              text: 'Pareto Chart',
-            },
-            xAxis: {
-              categories: ['A', 'B', 'C', 'D', 'E'],
-              title: {
-                text: 'Categories',
-              },
-            },
-            yAxis: [
-              {
-                title: {
-                  text: 'Frequency',
-                },
-              },
-              {
-                title: {
-                  text: 'Cumulative Percentage',
-                },
-                min: 0,
-                max: 100,
-                labels: {
-                  format: '{value}%',
-                },
-                opposite: true,
-              },
-            ],
-            plotOptions: {
-              column: {
-                dataLabels: {
-                  enabled: true,
-                },
-              },
-            },
-            series: [
-              {
-                type: 'column',
-                name: 'Frequency',
-                data: [5, 10, 15, 20, 25],
-              },
-              {
-                type: 'line',
-                name: 'Cumulative',
-                yAxis: 1,
-                data: [5, 15, 30, 50, 75],
-                marker: {
-                  enabled: true,
-                },
-              },
-            ],
-          };
-        }
-        case 'pyramid3d': {
-          return {
-            chart: {
-              type: 'pyramid3d',
-              height: '400px',
-              options3d: {
-                enabled: true,
-                alpha: 10,
-                beta: 0,
-                depth: 50,
-                viewDistance: 50,
-              },
-            },
-            title: {
-              text: '3D Pyramid Chart',
-            },
-            plotOptions: {
-              pyramid3d: {
-                dataLabels: {
-                  enabled: true,
-                  format: '{point.name}: {point.y}',
-                },
-              },
-            },
-            series: [
-              {
-                type: 'pyramid3d',
-                name: 'Values',
-                data: [
-                  ['A', 100],
-                  ['B', 80],
-                  ['C', 60],
-                  ['D', 40],
-                  ['E', 20],
-                ],
-              },
-            ],
-          };
-        }
-        case 'scatter3d': {
-          return {
-            chart: {
-              type: 'scatter3d',
-              options3d: {
-                enabled: true,
-                alpha: 20,
-                beta: 30,
-                depth: 200,
-                viewDistance: 10,
-                frame: {
-                  bottom: {
-                    size: 1,
-                    color: 'rgba(0,0,0,0.05)',
-                  },
-                },
-              },
-            },
-            title: {
-              text: 'a 3D Scatter Chart',
-            },
-            subtitle: {
-              text: 'using x y z coordinates',
-            },
-            plotOptions: {
-              scatter3d: {
-                width: 10,
-                height: 10,
-                depth: 10,
-              },
-            },
-            xAxis: {
-              min: 0,
-              max: 10,
-              gridLineWidth: 1,
-              title: {
-                text: 'X Axis',
-              },
-              startOnTick: true,
-              showLastLabel: true,
-              crosshair: {
-                enabled: true,
-              },
-              labels: {
-                format: '{value}',
-              },
-            },
-            yAxis: {
-              min: 0,
-              max: 10,
-              title: {
-                text: 'Y Axis',
-              },
-              startOnTick: true,
-              showLastLabel: true,
-              crosshair: {
-                enabled: true,
-              },
-              labels: {
-                format: '{value}',
-              },
-            },
-            zAxis: {
-              min: 0,
-              max: 10,
-              showFirstLabel: false,
-              title: {
-                text: 'Z Axis',
-              },
-              labels: {
-                format: '{value}',
-              },
-              startOnTick: true,
-              showLastLabel: true,
-              crosshair: {
-                enabled: true,
-              },
-            },
-            tooltip: {
-              headerFormat: '<b>{series.name}</b><br>',
-              pointFormat: 'X: {point.x}<br>Y: {point.y}<br>Z: {point.z}',
-            },
-            series: [
-              {
-                type: 'scatter3d',
-                name: 'Values',
-                data: [
-                  // [X, Y, Z]
-                  [1, 1, 1],
-                  [1, 1, 2],
-                  [1, 1, 5],
-                  [2, 3, 2],
-                  [2, 6, 4],
-                  [4, 5, 7],
-                  [4, 2, 8],
-                  [7, 1, 3],
-                  [7, 1, 5],
-                  [8, 1, 5],
-                ],
-                marker: {
-                  radius: 5,
-                },
-                tooltip: {
-                  pointFormat: 'X: {point.x}<br>Y: {point.y}<br>Z: {point.z}',
-                },
-              },
-            ],
-          };
-        }
-        default: {
-          // Create a completely clean configuration
-          return {
-            chart: {
-              type: value,
-              resetZoomButton: {
-                theme: {
-                  display: 'none',
-                },
-              },
-            },
-            title: {
-              text: 'Sample Chart',
-            },
-            xAxis: {
-              categories: ['0', '1', '2'],
-              gridLineWidth: 0,
-              minorGridLineWidth: 0,
-            },
-            yAxis: {
-              title: {
-                text: 'Values',
-              },
-              min: null,
-              max: null,
-              gridLineWidth: 0,
-              minorGridLineWidth: 0,
-              plotBands: undefined,
-              plotLines: undefined,
-              minorTickLength: 0,
-              tickLength: 0,
-            },
-            plotOptions: {
-              series: {
-                color: '#7cb5ec',
-                animation: true,
-              },
-            },
-            pane: undefined,
-            series: [
-              {
-                type: value,
-                name: 'Sample Chart',
-                data: [5, 10, 95],
-              },
-            ],
-            tooltip: {
-              enabled: true,
-              shared: true,
-            },
-            legend: {
-              enabled: true,
-            },
-            credits: {
-              enabled: false,
-            },
-          };
-        }
+        case 'cylinder':
+          return getCylinderOptions();
+        case 'pareto':
+          return getParetoOptions();
+        case 'pyramid3d':
+          return getPyramid3DOptions();
+        case 'scatter3d':
+          return getScatter3DOptions();
+        case 'pie':
+          return getPieOptions();
+        case 'area':
+          return getAreaOptions();
+        case 'bar':
+          return getBarOptions();
+        case 'line':
+          return getLineOptions();
+        default:
+          return getDefaultOptions(value);
       }
     })();
 

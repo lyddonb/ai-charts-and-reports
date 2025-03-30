@@ -50,4 +50,5 @@ const seriesTypes: string[] = [
   'xrange',
 ];
 
+export type ChartType = (typeof seriesTypes)[number];
 export default seriesTypes;
