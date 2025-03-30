@@ -12,6 +12,7 @@ import AnnotationsExample from './annotations';
 import ArcDiagramExample from './arc-diagram';
 import AreaChartExample from './area-chart';
 import AreaInvertedChartExample from './area-inverted';
+import AreaMissingChartExample from './area-missing';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -28,6 +29,7 @@ export const examples = [
   ArcDiagramExample,
   AreaChartExample,
   AreaInvertedChartExample,
+  AreaMissingChartExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
