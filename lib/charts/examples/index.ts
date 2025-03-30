@@ -2,12 +2,14 @@ import ThreeDAreaMultipleExample from './3d-area-multiple';
 import ThreeDColumnInteractiveExample from './3d-column-interactive';
 import ThreeDColumnNullValuesExample from './3d-column-null-values';
 import ThreeDColumnStackingGroupingExample from './3d-column-stacking-grouping';
+import ThreeDPieDonutExample from './3d-pie-donut';
 
 export const examples = [
   ThreeDAreaMultipleExample,
   ThreeDColumnInteractiveExample,
   ThreeDColumnNullValuesExample,
   ThreeDColumnStackingGroupingExample,
+  ThreeDPieDonutExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
