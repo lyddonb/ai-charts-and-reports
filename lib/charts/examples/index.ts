@@ -1,9 +1,11 @@
 import ThreeDAreaMultipleExample from './3d-area-multiple';
 import ThreeDColumnInteractiveExample from './3d-column-interactive';
+import ThreeDColumnNullValuesExample from './3d-column-null-values';
 
 export const examples = [
   ThreeDAreaMultipleExample,
   ThreeDColumnInteractiveExample,
+  ThreeDColumnNullValuesExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
