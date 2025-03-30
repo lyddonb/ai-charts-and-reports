@@ -1,12 +1,12 @@
 import type { Options } from 'highcharts';
 
-export const getGaugeOptions = (): Options => ({
+export const getSolidGaugeOptions = (): Options => ({
   chart: {
-    type: 'gauge',
+    type: 'solidgauge',
     height: '400px',
   },
   title: {
-    text: 'Gauge Chart',
+    text: 'Solid Gauge Chart',
   },
   pane: {
     startAngle: -150,
@@ -59,7 +59,7 @@ export const getGaugeOptions = (): Options => ({
   },
   series: [
     {
-      type: 'gauge',
+      type: 'solidgauge',
       name: 'Speed',
       data: [80],
       dataLabels: {

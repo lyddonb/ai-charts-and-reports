@@ -10,13 +10,13 @@ export const getPieOptions = (): Options => ({
   },
   plotOptions: {
     pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
       dataLabels: {
         enabled: true,
-        format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+        format: '{point.name}: {point.percentage:.1f}%',
       },
-      showInLegend: true,
+      tooltip: {
+        pointFormat: '{point.name}: {point.percentage:.1f}%',
+      },
     },
   },
   series: [
@@ -25,7 +25,8 @@ export const getPieOptions = (): Options => ({
       name: 'Values',
       data: [
         ['Firefox', 45.0],
-        ['Chrome', 26.8],
+        ['IE', 26.8],
+        ['Chrome', 12.8],
         ['Safari', 8.5],
         ['Opera', 6.2],
         ['Others', 0.7],

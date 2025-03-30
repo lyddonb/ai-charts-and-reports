@@ -1,15 +1,15 @@
 import type { Options } from 'highcharts';
 
-export const getCylinderOptions = (): Options => ({
+export const getLollipopOptions = (): Options => ({
   chart: {
-    type: 'cylinder',
+    type: 'lollipop',
     height: '400px',
   },
   title: {
-    text: 'Cylinder Chart',
+    text: 'Lollipop Chart',
   },
   xAxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    categories: ['A', 'B', 'C', 'D', 'E'],
     title: {
       text: null,
     },
@@ -20,7 +20,7 @@ export const getCylinderOptions = (): Options => ({
     },
   },
   plotOptions: {
-    cylinder: {
+    lollipop: {
       dataLabels: {
         enabled: true,
         format: '{point.y}',
@@ -32,9 +32,9 @@ export const getCylinderOptions = (): Options => ({
   },
   series: [
     {
-      type: 'cylinder',
+      type: 'lollipop',
       name: 'Values',
-      data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0],
+      data: [5, 3, 4, 7, 2],
     },
   ],
 });

@@ -1,12 +1,12 @@
 import type { Options } from 'highcharts';
 
-export const getCylinderOptions = (): Options => ({
+export const getColumnPyramidOptions = (): Options => ({
   chart: {
-    type: 'cylinder',
+    type: 'columnpyramid',
     height: '400px',
   },
   title: {
-    text: 'Cylinder Chart',
+    text: 'Column Pyramid Chart',
   },
   xAxis: {
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -20,7 +20,7 @@ export const getCylinderOptions = (): Options => ({
     },
   },
   plotOptions: {
-    cylinder: {
+    columnpyramid: {
       dataLabels: {
         enabled: true,
         format: '{point.y}',
@@ -32,7 +32,7 @@ export const getCylinderOptions = (): Options => ({
   },
   series: [
     {
-      type: 'cylinder',
+      type: 'columnpyramid',
       name: 'Values',
       data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0],
     },
