@@ -100,8 +100,6 @@ const Chart = ({ options }: { options: Options }) => {
     return <div>Loading chart...</div>;
   }
 
-  console.log(options);
-
   return (
     <HighchartsReact
       key={`${options.chart?.type}-${Date.now()}`}

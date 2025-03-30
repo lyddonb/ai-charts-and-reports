@@ -1,4 +1,4 @@
-import Configure from '@/lib/charts/configure';
+import Configure from '@/components/charts/configure';
 
 const ChartConfig = () => {
   return (

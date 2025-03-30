@@ -14,8 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import seriesTypes from './series';
-import Chart from '../../components/charts/chart';
+import seriesTypes from '../../lib/charts/series';
+import Chart from './chart';
 import {
   getGaugeOptions,
   getCylinderOptions,
@@ -66,7 +66,7 @@ import {
   getVectorOptions,
   getWindbarbOptions,
   getXRangeOptions,
-} from './options';
+} from '../../lib/charts/options';
 
 // dynamically import highcharts with ssr disabled
 // const highchartsreact = dynamic(() => import('highcharts-react-official'), {
