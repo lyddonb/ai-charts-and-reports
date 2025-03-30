@@ -13,6 +13,8 @@ export const getSplineOptions = (): Options => ({
     title: {
       text: 'Month',
     },
+    gridLineWidth: 0,
+    minorGridLineWidth: 0,
   },
   yAxis: {
     title: {
@@ -23,6 +25,12 @@ export const getSplineOptions = (): Options => ({
         return this.value.toString();
       },
     },
+    gridLineWidth: 0,
+    minorGridLineWidth: 0,
+    min: null,
+    max: null,
+    plotBands: [],
+    plotLines: [],
   },
   tooltip: {
     shared: true,
