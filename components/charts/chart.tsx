@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import type { Options } from 'highcharts';
+import { registerLowMedHighChart } from '../../lib/charts/lowmedhigh-chart';
 
 const loadHighchartsModules = async () => {
   try {
@@ -65,6 +66,9 @@ const loadHighchartsModules = async () => {
     await import('highcharts/es-modules/masters/modules/windbarb.src.js');
     await import('highcharts/es-modules/masters/modules/wordcloud.src.js');
     await import('highcharts/es-modules/masters/modules/xrange.src.js');
+
+    // Register our custom chart type
+    registerLowMedHighChart(Highcharts.default);
 
     return Highcharts.default;
   } catch (error) {

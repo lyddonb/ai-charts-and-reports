@@ -7,6 +7,7 @@ import ThreeDPieExample from './3d-pie';
 import ThreeDScatterDraggableExample from './3d-scatter-draggable';
 import AccessibleLineExample from './accessible-line';
 import AccessiblePieExample from './accessible-pie';
+import AdvancedAccessibleExample from './advanced-accessible';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -18,6 +19,7 @@ export const examples = [
   ThreeDScatterDraggableExample,
   AccessibleLineExample,
   AccessiblePieExample,
+  AdvancedAccessibleExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
