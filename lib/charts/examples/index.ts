@@ -10,6 +10,7 @@ import AccessiblePieExample from './accessible-pie';
 import AdvancedAccessibleExample from './advanced-accessible';
 import AnnotationsExample from './annotations';
 import ArcDiagramExample from './arc-diagram';
+import AreaChartExample from './area-chart';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -24,6 +25,7 @@ export const examples = [
   AdvancedAccessibleExample,
   AnnotationsExample,
   ArcDiagramExample,
+  AreaChartExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
