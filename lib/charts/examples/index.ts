@@ -23,6 +23,7 @@ import AreaSplineChartExample from './areaspline';
 import BarChartExample from './bar-chart';
 import BarForceExample from './bar-force';
 import BarNegativeStackExample from './bar-negative-stack';
+import BarStackedExample from './bar-stacked';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -50,6 +51,7 @@ export const examples = [
   BarChartExample,
   BarForceExample,
   BarNegativeStackExample,
+  BarStackedExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {
