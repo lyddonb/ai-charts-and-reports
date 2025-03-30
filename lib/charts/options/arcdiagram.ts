@@ -3,35 +3,93 @@ import type { Options, SeriesSankeyPointOptionsObject } from 'highcharts';
 export const getArcDiagramOptions = (): Options => ({
   chart: {
     type: 'arcdiagram',
-    height: '400px',
+    height: '500px',
+    backgroundColor: 'white',
+    marginTop: 80,
+    marginBottom: 80,
   },
   title: {
-    text: 'Arc Diagram',
+    text: 'Software Development Dependencies',
+    style: {
+      fontSize: '24px',
+      fontWeight: '600',
+    },
+  },
+  subtitle: {
+    text: 'Showing relationships between different components',
+    style: {
+      fontSize: '16px',
+      color: '#666',
+    },
   },
   plotOptions: {
     arcdiagram: {
-      dataLabels: {
-        enabled: true,
-        format: '{point.name}',
-      },
+      centeredLinks: true,
     },
   },
   series: [
     {
       type: 'arcdiagram',
-      name: 'Connections',
+      name: 'Dependencies',
+      keys: ['from', 'to', 'weight'],
       data: [
-        { from: 'A', to: 'B', weight: 5 },
-        { from: 'B', to: 'C', weight: 3 },
-        { from: 'C', to: 'D', weight: 4 },
-        { from: 'D', to: 'A', weight: 2 },
-      ] as SeriesSankeyPointOptionsObject[],
+        ['Frontend', 'API', 8],
+        ['API', 'Database', 10],
+        ['Frontend', 'Auth', 6],
+        ['Auth', 'Database', 7],
+        ['API', 'Cache', 5],
+        ['Cache', 'Database', 4],
+        ['Frontend', 'Analytics', 3],
+        ['Analytics', 'Database', 5],
+        ['Auth', 'API', 4],
+      ] as any,
       nodes: [
-        { id: 'A', name: 'Node A' },
-        { id: 'B', name: 'Node B' },
-        { id: 'C', name: 'Node C' },
-        { id: 'D', name: 'Node D' },
+        {
+          id: 'Frontend',
+          name: 'Frontend',
+          color: '#FF6B6B',
+        },
+        {
+          id: 'API',
+          name: 'API Layer',
+          color: '#4ECDC4',
+        },
+        {
+          id: 'Database',
+          name: 'Database',
+          color: '#45B7D1',
+        },
+        {
+          id: 'Auth',
+          name: 'Authentication',
+          color: '#96CEB4',
+        },
+        {
+          id: 'Cache',
+          name: 'Cache Layer',
+          color: '#FFD93D',
+        },
+        {
+          id: 'Analytics',
+          name: 'Analytics',
+          color: '#FF9F9F',
+        },
       ],
     },
   ],
+  tooltip: {
+    useHTML: true,
+    formatter: function () {
+      // @ts-ignore
+      const point = this.point;
+      if (point.fromNode && point.toNode) {
+        return `<b>${point.fromNode.name}</b> → <b>${point.toNode.name}</b><br/>
+                Dependency Weight: <b>${point.weight}</b>`;
+      }
+      return point.name;
+    },
+    style: {
+      fontSize: '14px',
+    },
+  },
 });
