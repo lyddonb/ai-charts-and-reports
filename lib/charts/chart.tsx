@@ -102,7 +102,13 @@ const Chart = ({ options }: { options: Options }) => {
 
   console.log(options);
 
-  return <HighchartsReact highcharts={highchartsInstance} options={options} />;
+  return (
+    <HighchartsReact
+      key={options.chart?.type}
+      highcharts={highchartsInstance}
+      options={options}
+    />
+  );
 };
 
 export default Chart;

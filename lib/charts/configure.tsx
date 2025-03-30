@@ -168,6 +168,7 @@ const Configure = () => {
 
   const handleChartTypeChange = (value: ChartType) => {
     // Get the new options
+    setChartOptions({});
     const newOptions = chartOptionsMap[value]();
 
     // Create a clean options object with only the necessary properties
