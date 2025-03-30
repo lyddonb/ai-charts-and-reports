@@ -4,6 +4,7 @@ import ThreeDColumnNullValuesExample from './3d-column-null-values';
 import ThreeDColumnStackingGroupingExample from './3d-column-stacking-grouping';
 import ThreeDPieDonutExample from './3d-pie-donut';
 import ThreeDPieExample from './3d-pie';
+import ThreeDScatterDraggableExample from './3d-scatter-draggable';
 
 export const examples = [
   ThreeDAreaMultipleExample,
@@ -12,6 +13,7 @@ export const examples = [
   ThreeDColumnStackingGroupingExample,
   ThreeDPieDonutExample,
   ThreeDPieExample,
+  ThreeDScatterDraggableExample,
 ];
 
 export const getExampleBySlug = (slug: string) => {

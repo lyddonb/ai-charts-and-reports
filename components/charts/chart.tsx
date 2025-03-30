@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-// import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import type { Options } from 'highcharts';
 
@@ -84,6 +83,33 @@ const Chart = ({ options }: { options: Options }) => {
     const init = async () => {
       try {
         const Highcharts = await loadHighchartsModules();
+
+        // Configure colors for 3D scatter
+        if (options.chart?.type === 'scatter3d') {
+          const colors = Highcharts.getOptions().colors;
+          if (colors) {
+            const gradientColors = colors.map((color) => {
+              // Convert any color to string format
+              const baseColor = String(color);
+              return {
+                radialGradient: {
+                  cx: 0.4,
+                  cy: 0.3,
+                  r: 0.5,
+                },
+                stops: [
+                  [0, baseColor],
+                  [1, Highcharts.color(baseColor).brighten(-0.2).get('rgb')],
+                ],
+              };
+            });
+
+            Highcharts.setOptions({
+              colors: gradientColors as any,
+            });
+          }
+        }
+
         setHighchartsInstance(Highcharts);
         setMounted(true);
       } catch (error) {
@@ -94,7 +120,7 @@ const Chart = ({ options }: { options: Options }) => {
     setMounted(false);
     setHighchartsInstance(null);
     init();
-  }, []);
+  }, [options.chart?.type]);
 
   if (!mounted || !highchartsInstance) {
     return <div>Loading chart...</div>;
