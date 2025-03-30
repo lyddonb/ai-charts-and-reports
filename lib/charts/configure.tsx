@@ -167,8 +167,29 @@ const Configure = () => {
   };
 
   const handleChartTypeChange = (value: ChartType) => {
-    const chartOptions = chartOptionsMap[value]();
-    setChartOptions(chartOptions as Options);
+    // Get the new options
+    const newOptions = chartOptionsMap[value]();
+
+    // Create a clean options object with only the necessary properties
+    const cleanOptions: Options = {
+      chart: {
+        type: value,
+        height: '400px',
+        backgroundColor: 'white',
+      },
+      title: newOptions.title,
+      subtitle: newOptions.subtitle,
+      xAxis: newOptions.xAxis,
+      yAxis: newOptions.yAxis,
+      series: newOptions.series,
+      tooltip: newOptions.tooltip,
+      plotOptions: newOptions.plotOptions,
+      credits: {
+        enabled: false,
+      },
+    };
+
+    setChartOptions(cleanOptions);
   };
 
   const handleSampleData = () => {

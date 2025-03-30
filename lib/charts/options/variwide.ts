@@ -4,9 +4,11 @@ export const getVariwideOptions = (): Options => ({
   chart: {
     type: 'variwide',
     height: '400px',
+    backgroundColor: 'transparent',
   },
   title: {
     text: 'Variwide Chart',
+    align: 'center',
   },
   xAxis: {
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -15,6 +17,8 @@ export const getVariwideOptions = (): Options => ({
     },
     gridLineWidth: 0,
     minorGridLineWidth: 0,
+    lineWidth: 1,
+    tickWidth: 1,
   },
   yAxis: {
     title: {
@@ -27,19 +31,25 @@ export const getVariwideOptions = (): Options => ({
     },
     gridLineWidth: 0,
     minorGridLineWidth: 0,
-    min: null,
-    max: null,
+    lineWidth: 1,
+    tickWidth: 1,
     plotBands: [],
     plotLines: [],
   },
   tooltip: {
     shared: true,
     valueSuffix: ' units',
+    headerFormat: '<b>{point.x}</b><br/>',
+    pointFormat: 'Value: {point.y}<br/>Width: {point.z}',
   },
   plotOptions: {
     variwide: {
       borderWidth: 0,
       colorByPoint: true,
+      dataLabels: {
+        enabled: true,
+        format: '{point.y}',
+      },
     },
   },
   series: [
@@ -57,4 +67,7 @@ export const getVariwideOptions = (): Options => ({
       ],
     },
   ],
+  credits: {
+    enabled: false,
+  },
 });
