@@ -20,6 +20,7 @@ const loadHighchartsModules = async () => {
     await import(
       'highcharts/es-modules/masters/modules/series-on-point.src.js'
     );
+    await import('highcharts/es-modules/masters/modules/annotations.src.js');
 
     // Load 3D module before any 3D-dependent modules
     await import('highcharts/es-modules/masters/highcharts-3d.src.js');
